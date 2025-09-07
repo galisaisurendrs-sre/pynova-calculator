@@ -20,16 +20,25 @@ pipeline {
     stages {
         stage('Get Branch') {
             steps {
-                echo "User selected branch: ${params.BRANCH_NAME}"
+                script {
+                    // Strip 'origin/' prefix if present
+                    def branchName = params.BRANCH_NAME.replaceFirst(/^origin\//, '')
+                    echo "User selected branch: ${branchName}"
+
+                    // Save branch name for downstream stages
+                    env.SELECTED_BRANCH = branchName
+                }
             }
         }
 
         stage('Clone Repository') {
             steps {
                 script {
+                    echo "Cloning branch: ${env.SELECTED_BRANCH}"
+
                     gitClone(
                         repo: 'git@github.com:galisaisurendrs-sre/pynova-calculator.git',
-                        branch: params.BRANCH_NAME.replace('origin/', ''),
+                        branch: env.SELECTED_BRANCH,
                         credsId: 'jenkins-key'
                     )
                 }

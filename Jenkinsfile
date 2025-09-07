@@ -13,7 +13,6 @@ pipeline {
             quickFilterEnabled: true,
             sortMode: 'DESCENDING',
             description: 'Select a Git branch to build',
-            listSize: 10,
             useRepository: 'git@github.com:galisaisurendrs-sre/pynova-calculator.git'
         )
     }

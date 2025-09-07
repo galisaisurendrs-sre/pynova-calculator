@@ -1,1 +1,2 @@
-.scannerwork
+# Ignore SonarQube scanner cache
+.scannerwork/

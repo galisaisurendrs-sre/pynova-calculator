@@ -22,7 +22,11 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 script {
-                    gitClone('git@github.com:your-org/your-repo.git',BRANCH_NAME,'my-ssh-credentials-id')
+                    gitClone(
+                        'git@github.com:galisaisurendrs-sre/pynova-calculator.git',
+                        BRANCH_NAME,
+                        'jenkins-key'
+                    )
                 }
             }
         }

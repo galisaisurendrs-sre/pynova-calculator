@@ -2,11 +2,13 @@
 
 pipeline {
     agent any
+
+    parameters {
         gitParameter(
             name: 'BRANCH_NAME',
             type: 'PT_BRANCH',
             defaultValue: 'main',
-            branch: 'refs/heads/',       // Only show real branch names
+            branch: 'refs/heads/',
             selectedValue: 'DEFAULT',
             quickFilterEnabled: true,
             sortMode: 'DESCENDING',
@@ -19,11 +21,8 @@ pipeline {
         stage('Get Branch') {
             steps {
                 script {
-                    // Strip 'origin/' prefix if present
                     def branchName = params.BRANCH_NAME.replaceFirst(/^origin\//, '')
                     echo "User selected branch: ${branchName}"
-
-                    // Save branch name for downstream stages
                     env.SELECTED_BRANCH = branchName
                 }
             }

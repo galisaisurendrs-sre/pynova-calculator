@@ -3,19 +3,25 @@
 pipeline {
     agent any
 
+    parameters {
+        gitParameter(
+            name: 'BRANCH_NAME',
+            type: 'PT_BRANCH',
+            defaultValue: 'main',
+            branch: '',
+            selectedValue: 'DEFAULT',
+            quickFilterEnabled: true,
+            sortMode: 'DESCENDING',
+            description: 'Select a Git branch to build',
+            listSize: 10,
+            useRepository: 'git@github.com:galisaisurendrs-sre/pynova-calculator.git'
+        )
+    }
+
     stages {
         stage('Get Branch') {
             steps {
-                script {
-                    BRANCH_NAME = input(
-                        id: 'userInput',
-                        message: 'Enter Git branch to checkout',
-                        parameters: [
-                            string(defaultValue: 'main', description: 'Branch name', name: 'branch')
-                        ]
-                    )
-                    echo "User selected branch: ${BRANCH_NAME}"
-                }
+                echo "User selected branch: ${params.BRANCH_NAME}"
             }
         }
 
@@ -24,7 +30,7 @@ pipeline {
                 script {
                     gitClone(
                         'git@github.com:galisaisurendrs-sre/pynova-calculator.git',
-                        BRANCH_NAME,
+                        params.BRANCH_NAME,
                         'jenkins-key'
                     )
                 }

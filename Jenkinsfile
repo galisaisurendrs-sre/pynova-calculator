@@ -2,13 +2,11 @@
 
 pipeline {
     agent any
-
-    parameters {
         gitParameter(
             name: 'BRANCH_NAME',
             type: 'PT_BRANCH',
             defaultValue: 'main',
-            branch: '',
+            branch: 'refs/heads/',       // Only show real branch names
             selectedValue: 'DEFAULT',
             quickFilterEnabled: true,
             sortMode: 'DESCENDING',
